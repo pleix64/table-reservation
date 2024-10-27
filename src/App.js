@@ -1,10 +1,17 @@
 import './App.css';
+import Header from './Header';
+import Footer from './Footer';
+import Main from './Main';
+import MetaTags from './MataTags';
 
 function App() {
   return (
-    <div className="App">
-      Homepage
-    </div>
+    <>
+      <MetaTags />
+      <Header />
+      <Main />
+      <Footer />
+    </>
   );
 }
 
