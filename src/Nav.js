@@ -1,3 +1,5 @@
+import { Stack } from "@chakra-ui/react";
+import './Nav.css';
 import React from "react";
 
 const sectionData = [
@@ -33,17 +35,19 @@ const sectionData = [
     },
 ];
 
-const Nav = (props) => {
+const Nav = ({direction}) => {
     return (
-      <nav>
-        <ul>
+      <nav className='Nav'>
+        <Stack 
+          direction={direction}
+          gap={direction==="row"? "5" : "1"}
+        >
             {sectionData.map((section) => {
                 return (
-                  <li>
-                    <a role="button" href={section.url} id={section.id}>{section.name}</a>
-                  </li>)
+                    <a role="button" href={section.url} id={section.id} key={section.id}>{section.name}</a>
+                )
             })}
-        </ul>
+        </Stack>
       </nav>
     );
 };
