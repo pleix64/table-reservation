@@ -6,7 +6,7 @@ import Nav from "./Nav";
 const Header = (props) => {
     return (
       <Center as='header'>
-        <Stack gap="20" direction={{ base: "column", md: "row" }}>
+        <Stack gap="20" direction={{ base: "column", md: "row" }} align="center">
           <Image src="logo/banner_lemon_yellow.png" alt="Little Lemon Logo" height="80px"></Image>
           <Nav direction="row"/>
         </Stack>

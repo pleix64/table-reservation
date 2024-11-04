@@ -1,4 +1,4 @@
-import { Center, Stack, Grid, Image } from "@chakra-ui/react";
+import { Box, Center, Stack, Grid, Image } from "@chakra-ui/react";
 import './Footer.css';
 import React from "react";
 import Nav from "./Nav";
@@ -20,14 +20,14 @@ const Footer = (props) => {
           />
         </Center>
         <Stack border="2px solid #66ccff">
-          Doormat Navigation
+          <Box>Doormat Navigation</Box>
           <Nav />
         </Stack>
         <Stack border="2px solid cyan">
-          Contact
+          <Box>Contact</Box>
         </Stack>
         <Stack border="2px solid green">
-          Social Media Links
+          <Box>Social Media Links</Box>
         </Stack>
       </Grid>
     );

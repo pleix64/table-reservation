@@ -1,19 +1,19 @@
-import { Provider } from "./components/ui/provider";
+import { ChakraProvider } from "@chakra-ui/react";
 import './App.css';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
 import MetaTags from './MataTags';
-import { system } from './theme';
+import { theme } from './theme';
 
 function App() {
   return (
-    <Provider value={system}>
+    <ChakraProvider theme={theme}>
       <MetaTags />
       <Header />
       <Main/>
       <Footer />
-    </Provider>
+    </ChakraProvider>
   );
 }
 

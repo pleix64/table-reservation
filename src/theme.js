@@ -1,5 +1,13 @@
-import { createSystem, defaultBaseConfig, defineConfig, defineTextStyles } from "@chakra-ui/react"
+import { extendTheme } from "@chakra-ui/react";
 
+export const theme = extendTheme({
+  fonts: {
+    heading: 'Courier New',
+    body: 'Karla',
+  },
+});
+
+/*
 const textStyles = defineTextStyles({
     body: {
       description: "The body text style - used in paragraphs",
@@ -14,14 +22,4 @@ const textStyles = defineTextStyles({
       },
     },
   });
-
-const customConfig = defineConfig({
-    theme: {
-        // 👇🏻 Define your tokens here
-        extend: {
-            textStyles,
-        }
-      }
-})
-
-export const system = createSystem(defaultBaseConfig, customConfig)
+*/

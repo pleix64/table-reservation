@@ -1,19 +1,19 @@
 import React from "react";
-import { Center } from "@chakra-ui/react";
+import { Box, Center, Heading } from "@chakra-ui/react";
 
 const Main = (props) => {
     return (
-      <main >
-        <Center as="p" height="30vh" border="2px solid yellow" textStyle="body">
-          Homepage
-        </Center>
-        <p>
+      <Box as="main" height="30vh" border="2px solid yellow">
+        <Heading as="h1">
+          <Center>Homepage</Center>
+        </Heading>
+        <Center as="p">
           Here is a paragraph.
-        </p>
-        <p>
+        </Center>
+        <Center as="p">
           Another paragraph.
-        </p>
-      </main>
+        </Center>
+      </Box>
     );
 };
 
