@@ -38,13 +38,13 @@ const sectionData = [
 const Nav = ({direction}) => {
     return (
       <nav className='Nav'>
-        <Stack 
+        <Stack
           direction={direction}
-          gap={direction==="row"? "5" : "1"}
+          gap={direction==="row"? "5" : "0"}
         >
             {sectionData.map((section) => {
                 return (
-                    <a role="button" href={section.url} id={section.id} key={section.id}>{section.name}</a>
+                    <a role="button" className="button" href={section.url} id={section.id} key={section.id}><p>{section.name}</p></a>
                 )
             })}
         </Stack>

@@ -7,7 +7,7 @@ const Header = (props) => {
     return (
       <Center as='header'>
         <Stack gap="20" direction={{ base: "column", md: "row" }} align="center">
-          <Image src="logo/banner_lemon_yellow.png" alt="Little Lemon Logo" height="80px"></Image>
+          <Image src="logo/banner_lemon_yellow.png" alt="Little Lemon Logo" height="70px"></Image>
           <Nav direction="row"/>
         </Stack>
       </Center>

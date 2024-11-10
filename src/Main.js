@@ -1,18 +1,13 @@
 import React from "react";
-import { Box, Center, Heading } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import HeroSection from "./HeroSection";
+import HighlightSection from "./HighlightSection";
 
 const Main = (props) => {
     return (
-      <Box as="main" height="30vh" border="2px solid yellow">
-        <Heading as="h1">
-          <Center>Homepage</Center>
-        </Heading>
-        <Center as="p">
-          Here is a paragraph.
-        </Center>
-        <Center as="p">
-          Another paragraph.
-        </Center>
+      <Box as="main" border="2px solid yellow">
+        <HeroSection />
+        <HighlightSection />
       </Box>
     );
 };
