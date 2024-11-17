@@ -5,7 +5,7 @@ import React from "react";
 const sectionData = [
     {
         name: "Home",
-        url: "url",
+        url: "/",
         id: 1
     },
     {
@@ -20,7 +20,7 @@ const sectionData = [
     },
     {
         name: "Reservations",
-        url: "url",
+        url: "/reservation",
         id: 4
     },
     {

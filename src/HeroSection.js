@@ -54,16 +54,15 @@ const HeroSection = () => {
                         focused on traditional recipes served with a modern
                         twist.
                     </GridItem>
-                    <GridItem 
+                    <GridItem
                       colStart={{ base: 1, md: 3 }}
                       colEnd={{ base: 7, md: 6 }}
                       rowStart={6}
                       rowEnd={7}
                       border="solid 1px blue"
                     >
-                      <Button colorScheme="yellow" className="button" borderRadius="xl"><p>Reserve a Table</p></Button>
+                      <Button as="a" href="/reservation" variant="brandPrimary" borderRadius="xl">Reserve a Table</Button>
                     </GridItem>
-                    
                 </Grid>
             </GridItem>
             <GridItem

@@ -33,7 +33,7 @@ const HighlightSection = () => {
             <Stack maxWidth="960px">
                 <HStack justify="space-between" padding={2}>
                     <h1>This week's specials!</h1>
-                    <Button className="button" colorScheme="yellow" borderRadius="xl"><p>Online Menu</p></Button>
+                    <Button variant="brandPrimary" borderRadius="xl">Online Menu</Button>
                 </HStack>
                 <Stack direction={{ base: 'column', md: 'row' }}>
                     {cardData.map( item => {
