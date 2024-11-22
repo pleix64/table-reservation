@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-//import React, { useState, useEffect } from "react";
+//import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     Heading,
     Box,
@@ -11,6 +12,9 @@ import {
     Flex,
     Grid,
     Stack,
+    Text,
+    UnorderedList,
+    ListItem,
     FormControl,
     FormErrorMessage,
  } from "@chakra-ui/react";
@@ -20,37 +24,38 @@ import "yup-phone-lite";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { addDays } from "date-fns";
+import { globals } from './globals'
+import { genTimeSlot, genGroup, toDateString } from "./utils";
 
-const genTimeSlot = (num) => {
-    return `${Math.floor(num / 2) + 5}:${num % 2 === 0 ? '00' : '30'} p.m.`;
-};
+const timeLabels = [...Array(globals.NUM_SLOTS).keys()].map(genTimeSlot);
 
-const genGroup = (num) => {
-    if(num===1) {
-        return '1 person';
-    } else if(num > 1 && num < 21) {
-        return `${num} people`;
-    } else {
-        return 'Larger party';
-    }
-};
-
-const Reservation = () => {
+const Reservation = ({availableTimes, dispatch}) => {
     const [step, setStep] = useState(1);
+    const [hold, setHold] = useState({
+        date: "",
+        slot: "",
+        group: "",
+    });
     const formikStep1 = useFormik({
         initialValues: {
             date: new Date(),
-            time: "",
-            group: "2 people",
+            slot: "",
+            group: 2,
         },
         onSubmit: (values) => {
             console.log("Step 1 onSubmit is called.");
+            console.log("print values: ", values);
+            setHold({
+                date: toDateString(values.date),
+                slot: values.slot,
+                group: values.group,
+            });
             setStep(2);
         },
         validationSchema: Yup.object({
             date: null,
-            time: Yup.string().required("Please select a time."),
-            group: Yup.string().required("Please select number of people.")
+            slot: Yup.number().min(0, "Please select a time.").max(globals.NUM_SLOTS).required("Please select a time."),
+            group: Yup.number().min(1).required("Please select number of people."),
         }),
         validateOnChange: true
     });
@@ -68,6 +73,18 @@ const Reservation = () => {
         },
         onSubmit: (values) => {
             console.log("Step 2 onSubmit is called.");
+            console.log("User Info Received:");
+            console.log(values.firstName, " ", values.lastName);
+            console.log(values.phoneNumber, " ", values.email);
+            console.log(values.occasion);
+            console.log(values.specialRequest);
+            dispatch({
+                type: 'reserve',
+                date: hold.date,
+                slot: parseInt(hold.slot),
+                numTables: Math.floor(parseInt(hold.group) / 4) + 1,
+            });
+            setStep(3);
         },
         validationSchema: Yup.object({
             firstName: Yup.string().required("First name is required."),
@@ -77,11 +94,11 @@ const Reservation = () => {
         }),
     });
 
-    // useEffect(() =>{
-    //     console.log("date: ", date);
-    //     console.log("time: ", time);
-    //     console.log("group: ", group);
-    // }, [date, time, group]);
+    useEffect(() =>{
+        console.log(availableTimes);
+    }, [availableTimes]);
+
+    const navigate = useNavigate();
 
     return (
     <Box
@@ -96,10 +113,33 @@ const Reservation = () => {
       m="10px auto"
       onSubmit={step === 1 ? formikStep1.handleSubmit : formikStep2.handleSubmit}
     >
-        {step === 1 ? <BookTime formik={formikStep1}/> : <DinerInfo formik={formikStep2}/>}
-        <ButtonGroup w="100%" marginTop={3}>
+        {
+          step === 1 ?
+          <BookTime formik={formikStep1} availableTimes={availableTimes}/> : (
+            step === 2 ?
+            <DinerInfo formik={formikStep2} hold={hold}/> :
+            <Confirmation
+              firstName={formikStep2.values.firstName}
+              lastName={formikStep2.values.lastName}
+              phoneNumber={formikStep2.values.phoneNumber}
+              email={formikStep2.values.email}
+              date={formikStep1.values.date}
+              slot={formikStep1.values.slot}
+              group={formikStep1.values.group}
+            />
+          )
+        }
+        {step === 3 ?
+            <Button
+              type="button"
+              variant="brandPrimary"
+              onClick={() => navigate(-1)}
+            >
+                OK
+            </Button> :
+            <ButtonGroup w="100%" marginTop={3}>
                 <Flex gap={1}>
-                    <Button 
+                    <Button
                       variant="brandSecondary"
                       disabled={step === 1} onClick={()=>setStep(1)}>Back</Button>
                     {step===1 ?
@@ -107,21 +147,15 @@ const Reservation = () => {
                       <Button type="submit" variant="brandPrimary">Complete reservation</Button>
                     }
                 </Flex>
-            {/* <Flex w="100%" justifyContent="space-between">
-                <Flex>
-                    <Button disabled={step === 1} onClick={()=>setStep(1)}>Back</Button>
-                    <Button type="submit">Next</Button>
-                </Flex>
-                {step===2 ? (<Button>Complete reservation</Button>) : null}
-            </Flex> */}
-        </ButtonGroup>
+            </ButtonGroup>
+        }
     </Box>
     );
 };
 
-const BookTime = ({formik}) => {
+const BookTime = ({formik, availableTimes}) => {
     return (<>
-    <Heading as="h1">Reserve a table</Heading>
+    <h1>Reserve a table</h1>
     <Box>
         <Stack gap={5} direction={{ base: "column", md: "row"}}>
             <FormControl isInvalid={formik.touched.date && formik.errors.date}>
@@ -138,30 +172,36 @@ const BookTime = ({formik}) => {
                         id="date"
                         name="date"
                         minDate={new Date()}
-                        maxDate={addDays(new Date(), 10)}
+                        maxDate={addDays(new Date(), globals.NUM_DAYS - 1)}
                         selected={formik.values.date}
-                        onChange={(val) => { formik.setFieldValue('date', Date.parse(val)); }}
+                        onChange={(val) => { formik.setFieldValue('date', new Date(val)); }}
                         showIcon
                         toggleCalendarOnIconClick
                     />
                 </Box>
                 <FormErrorMessage>{formik.errors.date}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={formik.touched.time && formik.errors.time}>
+            <FormControl isInvalid={formik.touched.slot && formik.errors.slot}>
                 <Select
-                    placeholder="Select time" {...formik.getFieldProps('time')}
+                    placeholder="Select time" {...formik.getFieldProps('slot')}
                     boxShadow="sm"
                     _hover={{ boxShadow: "md" }}
                 >
                     {
-                        [...Array(10).keys()].map((x) => {
+                        [...Array(globals.NUM_SLOTS).keys()].map((x) => {
                             return (
-                                <option key={x} value={genTimeSlot(x)} >{genTimeSlot(x)}</option>
+                                <option
+                                  key={timeLabels[x]}
+                                  value={x}
+                                  disabled={availableTimes[toDateString(formik.values.date)][x]<=0}
+                                >
+                                    {timeLabels[x]}
+                                </option>
                             )
                         })
                     }
                 </Select>
-                <FormErrorMessage>{formik.errors.time}</FormErrorMessage>
+                <FormErrorMessage>{formik.errors.slot}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={formik.touched.group && formik.errors.group}>
                 <Select
@@ -169,9 +209,9 @@ const BookTime = ({formik}) => {
                     boxShadow="sm"
                     _hover={{ boxShadow: "md" }}
                 >{
-                    [...Array(21).keys()].map((x) => {
+                    [...Array(11).keys()].map((x) => {
                         return (
-                            <option key={x} value={genGroup(x + 1)}>{genGroup(x + 1)}</option>
+                            <option key={genGroup(x + 1)} value={x + 1}>{genGroup(x + 1)}</option>
                         )
                     })
                 }</Select>
@@ -182,10 +222,16 @@ const BookTime = ({formik}) => {
     </>)
 };
 
-const DinerInfo = ({formik}) => {
+const DinerInfo = ({formik, hold}) => {
     return (
         <>
-        <Heading as="h1">You's almost done!</Heading>
+        <h1>You're almost done!</h1>
+        <Stack gap={5} direction={{ base: "column", md: "row"}}>
+            <Text>{hold.date}</Text>
+            <Text>{timeLabels[hold.slot]}</Text>
+            <Text>{genGroup(hold.group)}</Text>
+        </Stack>
+        <h2>Diner details</h2>
         <Grid
           gap={3}
           templateColumns={{ base: "100%", md: "repeat(2, 49%)" }}
@@ -204,7 +250,6 @@ const DinerInfo = ({formik}) => {
                                 "specialRequest specialRequest"` }}
         >
             <FormControl
-                as="GridItem"
                 gridArea="firstName"
                 isInvalid={formik.touched.firstName && formik.errors.firstName}
             >
@@ -221,7 +266,6 @@ const DinerInfo = ({formik}) => {
                 <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage>
             </FormControl>
             <FormControl
-              as="GridItem"
               gridArea="lastName"
               isInvalid={formik.touched.lastName && formik.errors.lastName}
             >
@@ -234,7 +278,6 @@ const DinerInfo = ({formik}) => {
                 <FormErrorMessage>{formik.errors.lastName}</FormErrorMessage>
             </FormControl>
             <FormControl
-              as="GridItem"
               gridArea="phoneNumber"
               isInvalid={formik.touched.phoneNumber && formik.errors.phoneNumber}
             >
@@ -248,7 +291,6 @@ const DinerInfo = ({formik}) => {
                 <FormErrorMessage>{formik.errors.phoneNumber}</FormErrorMessage>
             </FormControl>
             <FormControl
-              as="GridItem"
               gridArea="email"
               isInvalid={formik.touched.email && formik.errors.email}
             >
@@ -262,7 +304,6 @@ const DinerInfo = ({formik}) => {
                 <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
             </FormControl>
             <FormControl
-              as="GridItem"
               gridArea="occasion"
               isInvalid={formik.touched.occasion && formik.errors.occasion}
             >
@@ -281,7 +322,6 @@ const DinerInfo = ({formik}) => {
                 <FormErrorMessage>{formik.errors.occasion}</FormErrorMessage>
             </FormControl>
             <FormControl
-              as="GridItem"
               gridArea="specialRequest"
               isInvalid={formik.touched.specialRequest && formik.errors.specialRequest}
             >
@@ -296,6 +336,47 @@ const DinerInfo = ({formik}) => {
         </Grid>
         </>
     )
+};
+
+const Confirmation = (props) => {
+    return (<>
+        <Heading as="h1">Reservation Confirmation</Heading>
+        <Text as="p">
+            Dear {props.firstName} {props.lastName},
+        </Text>
+        <Text as="p">
+        Thank you for choosing Little Lemon! We’re excited to host you. Below are the details of your reservation:
+        </Text>
+        <UnorderedList>
+            <ListItem>Name: {props.firstName} {props.lastName}</ListItem>
+            <ListItem>Date: {props.date.toString().slice(0,15)}</ListItem>
+            <ListItem>Time: {timeLabels[props.slot]}</ListItem>
+            <ListItem>Guests: {genGroup(props.group)}</ListItem>
+            <ListItem>Location: Little Lemon, Chicago</ListItem>
+        </UnorderedList>
+        <Text as="p">
+            Contact Information:
+        </Text>
+        <UnorderedList>
+            <ListItem>Email: {props.email}</ListItem>
+            <ListItem>Phone: {props.phoneNumber}</ListItem>
+        </UnorderedList>
+        <Text as="p">
+            We have sent this confirmation to your email and will also send you a text reminder to your phone as your reservation approaches.
+        </Text>
+        <Text as="p">
+            If you have any special requests or need to make changes to your booking, please contact us at info@littlelemonchicago.com or call us at (312) 555-6789.
+        </Text>
+        <Text as="p">
+            We look forward to serving you soon!
+        </Text>
+        <Text as="p">
+            Warm regards,
+        </Text>
+        <Text as="p">
+            The Little Lemon Team
+        </Text>
+    </>)
 };
 
 export default Reservation;

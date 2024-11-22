@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, GridItem, Image, Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
     return (
@@ -61,7 +62,9 @@ const HeroSection = () => {
                       rowEnd={7}
                       border="solid 1px blue"
                     >
-                      <Button as="a" href="/reservation" variant="brandPrimary" borderRadius="xl">Reserve a Table</Button>
+                      <Button asChild variant="brandPrimary" borderRadius="xl">
+                        <Link to="/reservation">Reserve a Table</Link>
+                      </Button>
                     </GridItem>
                 </Grid>
             </GridItem>

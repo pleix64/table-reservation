@@ -1,6 +1,7 @@
 import { Stack } from "@chakra-ui/react";
 import './Nav.css';
 import React from "react";
+import { Link } from "react-router-dom";
 
 const sectionData = [
     {
@@ -44,7 +45,7 @@ const Nav = ({direction}) => {
         >
             {sectionData.map((section) => {
                 return (
-                    <a role="button" className="button" href={section.url} id={section.id} key={section.id}><p>{section.name}</p></a>
+                    <Link className="button" to={section.url} id={section.id} key={section.id}><p>{section.name}</p></Link>
                 )
             })}
         </Stack>
