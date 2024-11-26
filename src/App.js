@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useReducer } from "react";
 import { ChakraProvider } from "@chakra-ui/react";
 import {
   BrowserRouter as Router,
@@ -10,12 +10,13 @@ import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
 import Reservations from "./Reservation";
+import Menu from "./Menu";
+import LogIn from "./LogIn";
 import MetaTags from './MataTags';
 import { theme } from './theme';
 import { addDays } from "date-fns";
 import { globals } from "./globals";
 import { toDateString } from "./utils";
-import { HStack, Button } from "@chakra-ui/react";
 
 function reducer(availableTimes, action) {
   switch (action.type) {
@@ -31,6 +32,9 @@ function reducer(availableTimes, action) {
         ...availableTimes,
         [date]: slotsUpdate,
       };
+    }
+    default: {
+      return {...availableTimes}
     }
   }
 };
@@ -59,25 +63,21 @@ function initializeTimes(dateObj) {
 
 function App() {
   const [availableTimes, dispatch] = useReducer(reducer, new Date(), initializeTimes);
-  const [count, setCount] = useState(0);
   return (
     <ChakraProvider theme={theme}>
       <MetaTags />
       <Router>
         <Header />
-        <HStack>
-          <h1>Couter for test: {count}</h1>
-          <Button onClick={() => setCount(count + 1)}>
-            <h2>+1</h2>
-          </Button>
-        </HStack>
         <Routes>
           <Route exact path='/' element={<Main />} />
+          <Route path='/menu' element={<Menu />} />
           <Route path='/reservation' element={
             <Reservations
               availableTimes={availableTimes}
               dispatch={dispatch}
-            />} />
+            />}
+          />
+          <Route path='/login' element={<LogIn />} />
         </Routes>
         <Footer />
       </Router>

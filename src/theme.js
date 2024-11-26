@@ -40,12 +40,14 @@ export const theme = extendTheme({
         fontWeight: 'medium',
         //fontSize: '5.333rem',
         fontSize: '3.667rem',
+        lineHeight: '100%',
       },
       'h2': {
         fontFamily: 'Markazi Text',
         fontWeight: 'normal',
         //fontSize: '3.333rem',
         fontSize: '2.5rem',
+        lineHeight: '100%'
       },
       'h3': {
         fontFamily: 'Karla',

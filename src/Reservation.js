@@ -141,10 +141,26 @@ const Reservation = ({availableTimes, dispatch}) => {
                 <Flex gap={1}>
                     <Button
                       variant="brandSecondary"
-                      disabled={step === 1} onClick={()=>setStep(1)}>Back</Button>
+                      disabled={step === 1}
+                      onClick={()=>setStep(1)}
+                    >
+                        Back
+                    </Button>
                     {step===1 ?
-                      <Button type="submit" variant="brandSecondary">Next</Button> :
-                      <Button type="submit" variant="brandPrimary">Complete reservation</Button>
+                      <Button
+                        type="submit"
+                        variant="brandSecondary"
+                        disabled={!formikStep1.dirty || !formikStep1.isValid}
+                      >
+                        Next
+                      </Button> :
+                      <Button
+                        type="submit"
+                        variant="brandPrimary"
+                        disabled={!formikStep2.dirty || !formikStep2.isValid}
+                      >
+                        Complete reservation
+                      </Button>
                     }
                 </Flex>
             </ButtonGroup>
@@ -155,7 +171,7 @@ const Reservation = ({availableTimes, dispatch}) => {
 
 const BookTime = ({formik, availableTimes}) => {
     return (<>
-    <h1>Reserve a table</h1>
+    <Heading as="h1">Reserve a table</Heading>
     <Box>
         <Stack gap={5} direction={{ base: "column", md: "row"}}>
             <FormControl isInvalid={formik.touched.date && formik.errors.date}>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardHeader, CardBody, Image, Text, Stack, HStack, Flex, Heading, Button} from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTruckFast } from "@fortawesome/free-solid-svg-icons";
 
@@ -33,7 +34,9 @@ const HighlightSection = () => {
             <Stack maxWidth="960px">
                 <HStack justify="space-between" padding={2}>
                     <h1>This week's specials!</h1>
-                    <Button variant="brandPrimary" borderRadius="xl">Online Menu</Button>
+                    <Button asChild variant="brandPrimary" borderRadius="xl">
+                        <Link to="/menu">Online Menu</Link>
+                    </Button>
                 </HStack>
                 <Stack direction={{ base: 'column', md: 'row' }}>
                     {cardData.map( item => {
