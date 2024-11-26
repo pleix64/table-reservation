@@ -3,9 +3,9 @@ import './Header.css';
 import React from "react";
 import Nav from "./Nav";
 
-const Header = (props) => {
+const Header = () => {
     return (
-      <Center as='header'>
+      <Center as='header' mt="1rem">
         <Stack gap="20" direction={{ base: "column", md: "row" }} align="center">
           <Image src="logo/banner_lemon_yellow.png" alt="Little Lemon Logo" height="70px"></Image>
           <Nav direction="row"/>

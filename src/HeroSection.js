@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const HeroSection = () => {
     return (
         <Grid
+          mt="2rem"
           templateColumns={{ base: "6fr minmax(200px, 4fr)", md: "7fr minmax(300px, 3fr) 2fr"}} 
           templateRows="repeat(12, 34px)">
             <GridItem

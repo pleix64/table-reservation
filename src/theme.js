@@ -83,6 +83,23 @@ export const theme = extendTheme({
           textTransform: 'capitalize',
         },
       },
+      '.footer': {
+        h3: {
+          fontWeight: "medium",
+          fontSize: "1.2rem",
+          textTransform: 'none',
+        },
+        p: {
+          fontWeight: "medium",
+          fontSize: "1rem",
+        },
+      },
+      '.message': {
+        p: {
+          fontWeight: 'normal',
+          fontSize: '1rem',
+        }
+      },
     }
   },
   components: {

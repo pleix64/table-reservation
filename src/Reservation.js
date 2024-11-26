@@ -355,44 +355,39 @@ const DinerInfo = ({formik, hold}) => {
 };
 
 const Confirmation = (props) => {
-    return (<>
-        <Heading as="h1">Reservation Confirmation</Heading>
+    return (
+    <Box className="message" mb="1rem">
+        <Heading as="h1" mb="1rem">Confirmation of Booking</Heading>
         <Text as="p">
-            Dear {props.firstName} {props.lastName},
+            Dear <b>{props.firstName} {props.lastName}</b>,
         </Text>
+        <br />
         <Text as="p">
         Thank you for choosing Little Lemon! We’re excited to host you. Below are the details of your reservation:
         </Text>
         <UnorderedList>
-            <ListItem>Name: {props.firstName} {props.lastName}</ListItem>
-            <ListItem>Date: {props.date.toString().slice(0,15)}</ListItem>
-            <ListItem>Time: {timeLabels[props.slot]}</ListItem>
-            <ListItem>Guests: {genGroup(props.group)}</ListItem>
+            <ListItem>Time: <b>{props.date.toString().slice(0,15)}, {timeLabels[props.slot]}</b></ListItem>
+            <ListItem>Guests: <b>{genGroup(props.group)}</b></ListItem>
             <ListItem>Location: Little Lemon, Chicago</ListItem>
         </UnorderedList>
         <Text as="p">
-            Contact Information:
-        </Text>
-        <UnorderedList>
-            <ListItem>Email: {props.email}</ListItem>
-            <ListItem>Phone: {props.phoneNumber}</ListItem>
-        </UnorderedList>
-        <Text as="p">
-            We have sent this confirmation to your email and will also send you a text reminder to your phone as your reservation approaches.
+            We have sent this confirmation to <b>{props.email}</b> and will also send you a text reminder to <b>{props.phoneNumber}</b> as your reservation approaches.
         </Text>
         <Text as="p">
-            If you have any special requests or need to make changes to your booking, please contact us at info@littlelemonchicago.com or call us at (312) 555-6789.
+            If you have any special requests or need to make changes to your booking, please contact us at <b>info@littlelemon.com</b> or call us at <b>(312) 555-6789</b>.
         </Text>
+        <br />
         <Text as="p">
             We look forward to serving you soon!
         </Text>
+        <br />
         <Text as="p">
             Warm regards,
         </Text>
         <Text as="p">
-            The Little Lemon Team
+            <b>The Little Lemon Team</b>
         </Text>
-    </>)
+    </Box>)
 };
 
 export default Reservation;

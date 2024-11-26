@@ -12,6 +12,7 @@ import Main from './Main';
 import Reservations from "./Reservation";
 import Menu from "./Menu";
 import LogIn from "./LogIn";
+import OrderOnline from "./OrderOnline";
 import MetaTags from './MataTags';
 import { theme } from './theme';
 import { addDays } from "date-fns";
@@ -77,6 +78,7 @@ function App() {
               dispatch={dispatch}
             />}
           />
+          <Route path='/cart' element={<OrderOnline />} />
           <Route path='/login' element={<LogIn />} />
         </Routes>
         <Footer />

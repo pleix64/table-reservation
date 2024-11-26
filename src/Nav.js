@@ -1,5 +1,4 @@
 import { Button, Stack } from "@chakra-ui/react";
-import './Nav.css';
 import React from "react";
 import { Link, useNavigate, redirect } from "react-router-dom";
 
@@ -31,7 +30,7 @@ const sectionData = [
     {
         name: "Order Online",
         type: "page",
-        url: "url",
+        url: "/cart",
         id: 5
     },
     {
@@ -58,7 +57,7 @@ const handleClick = (id, navigate) => () => {
 const Nav = ({direction}) => {
     const navigate = useNavigate();
     return (
-      <nav className='Nav'>
+      <nav>
         <Stack
           direction={direction}
           gap={direction==="row"? "5" : "0"}
