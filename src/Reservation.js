@@ -17,6 +17,7 @@ import {
     ListItem,
     FormControl,
     FormErrorMessage,
+    HStack,
  } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
@@ -27,7 +28,7 @@ import { addDays } from "date-fns";
 import { globals } from './globals'
 import { genTimeSlot, genGroup, toDateString } from "./utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, faClock, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const timeLabels = [...Array(globals.NUM_SLOTS).keys()].map(genTimeSlot);
 
@@ -244,10 +245,19 @@ const DinerInfo = ({formik, hold}) => {
     return (
         <>
         <h1>You're almost done!</h1>
-        <Stack gap={5} direction={{ base: "column", md: "row"}}>
-            <Text>{hold.date}</Text>
-            <Text>{timeLabels[hold.slot]}</Text>
-            <Text>{genGroup(hold.group)}</Text>
+        <Stack gap={5} direction={{ base: "column", md: "row"}} mt="1rem" mb="1rem">
+            <HStack>
+                <FontAwesomeIcon icon={faCalendar} style={{ color: "#495E57" }}/>
+                <Text>{hold.date}</Text>
+            </HStack>
+            <HStack>
+                <FontAwesomeIcon icon={faClock} style={{ color: "#495E57" }}/>
+                <Text>{timeLabels[hold.slot]}</Text>
+            </HStack>
+            <HStack>
+                <FontAwesomeIcon icon={faUser} style={{ color: "#495E57" }}/>
+                <Text>{genGroup(hold.group)}</Text>
+            </HStack>
         </Stack>
         <h2>Diner details</h2>
         <Grid
