@@ -1,4 +1,4 @@
-import { Button, Collapse, Flex, HStack, Image, Text, Circle } from '@chakra-ui/react'
+import { Collapse, Flex, HStack, Image, Text, Circle } from '@chakra-ui/react'
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
 
 const defaultValues = {
@@ -35,7 +35,6 @@ const ImageSlideController = ({ auto }) => {
                     }
                 })
             }, auto)
-
         }
     }
     useEffect(() => {
@@ -46,7 +45,15 @@ const ImageSlideController = ({ auto }) => {
     return (
         <HStack mt={4} w="full" justify="center">
             {slide?.images && slide?.images.map((img, index) =>
-                <Circle as="Button" onClick={() => changeSlide(index)} bg={slide?.index === index ? "primary.800" : "gray.100"} borderRadius="full" h="12px" w="12px" key={`button_${img}`} />
+                <Circle
+                  as="Button"
+                  onClick={() => changeSlide(index)}
+                  bg={slide?.index === index ? "primary.800" : "gray.100"}
+                  borderRadius="full"
+                  h="12px"
+                  w="12px"
+                  key={`button_${img}`}
+                />
             )}
         </HStack>
     )

@@ -4,12 +4,9 @@ import HeroSection from "./HeroSection";
 import HighlightSection from "./HighlightSection";
 import About from "./About";
 
-const Main = (props) => {
+const Main = () => {
     return (
-      <Box
-        as="main"
-        //border="2px solid yellow"
-      >
+      <Box as="main">
         <HeroSection />
         <HighlightSection />
         <About />

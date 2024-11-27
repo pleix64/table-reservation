@@ -1,5 +1,4 @@
 import { Center, Stack, Image } from "@chakra-ui/react";
-import './Header.css';
 import React from "react";
 import Nav from "./Nav";
 

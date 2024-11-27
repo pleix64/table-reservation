@@ -106,10 +106,6 @@ const Reservation = ({availableTimes, dispatch}) => {
     return (
     <Box
       as="form"
-      //borderWidth="1px"
-      //rounded="lg"
-      //shadow="1px 1px 3px rgba(0,0,0,0.3)"
-      //bg="primary.700"
       borderRadius="xl"
       maxWidth={800}
       p={6}
@@ -174,77 +170,75 @@ const Reservation = ({availableTimes, dispatch}) => {
 
 const BookTime = ({formik, availableTimes}) => {
     return (<>
-    <Heading as="h1">Reserve a table</Heading>
-    <Box>
-        <Stack gap={5} direction={{ base: "column", md: "row"}}>
-            <FormControl isInvalid={formik.touched.date && formik.errors.date}>
-                <Box
-                  asChild
-                  h="40px"
-                  border="solid 1px"
-                  borderColor="gray.200"
-                  borderRadius="md"
-                  boxShadow="sm"
-                  _hover={{ borderColor: "gray.300", boxShadow: "md" }}
-                >
-                    <DatePicker
-                        id="date"
-                        name="date"
-                        minDate={new Date()}
-                        maxDate={addDays(new Date(), globals.NUM_DAYS - 1)}
-                        selected={formik.values.date}
-                        onChange={(val) => { formik.setFieldValue('date', new Date(val)); }}
-                        showIcon
-                        toggleCalendarOnIconClick
-                    />
-                </Box>
-                <FormErrorMessage>{formik.errors.date}</FormErrorMessage>
-            </FormControl>
-            <FormControl isInvalid={formik.touched.slot && formik.errors.slot}>
-                <Select
-                    placeholder="Select time" {...formik.getFieldProps('slot')}
-                    boxShadow="sm"
-                    _hover={{ boxShadow: "md" }}
-                >
-                    {
-                        [...Array(globals.NUM_SLOTS).keys()].map((x) => {
-                            return (
-                                <option
-                                  key={timeLabels[x]}
-                                  value={x}
-                                  disabled={availableTimes[toDateString(formik.values.date)][x]<=0}
-                                >
-                                    {timeLabels[x]}
-                                </option>
-                            )
-                        })
-                    }
-                </Select>
-                <FormErrorMessage>{formik.errors.slot}</FormErrorMessage>
-            </FormControl>
-            <FormControl isInvalid={formik.touched.group && formik.errors.group}>
-                <Select
-                    {...formik.getFieldProps('group')}
-                    boxShadow="sm"
-                    _hover={{ boxShadow: "md" }}
-                >{
-                    [...Array(11).keys()].map((x) => {
+    <Heading as="h1" size='xl'>Reserve a table</Heading>
+    <Stack gap={5} direction={{ base: "column", md: "row"}} mt="1rem" mb="0.5rem">
+        <FormControl isInvalid={formik.touched.date && formik.errors.date}>
+            <Box
+              asChild
+              h="40px"
+              border="solid 1px"
+              borderColor="gray.200"
+              borderRadius="md"
+              boxShadow="sm"
+              _hover={{ borderColor: "gray.300", boxShadow: "md" }}
+            >
+                <DatePicker
+                    id="date"
+                    name="date"
+                    minDate={new Date()}
+                    maxDate={addDays(new Date(), globals.NUM_DAYS - 1)}
+                    selected={formik.values.date}
+                    onChange={(val) => { formik.setFieldValue('date', new Date(val)); }}
+                    showIcon
+                    toggleCalendarOnIconClick
+                />
+            </Box>
+            <FormErrorMessage>{formik.errors.date}</FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={formik.touched.slot && formik.errors.slot}>
+            <Select
+                placeholder="Select time" {...formik.getFieldProps('slot')}
+                boxShadow="sm"
+                _hover={{ boxShadow: "md" }}
+            >
+                {
+                    [...Array(globals.NUM_SLOTS).keys()].map((x) => {
                         return (
-                            <option key={genGroup(x + 1)} value={x + 1}>{genGroup(x + 1)}</option>
+                            <option
+                                key={timeLabels[x]}
+                                value={x}
+                                disabled={availableTimes[toDateString(formik.values.date)][x]<=0}
+                            >
+                                {timeLabels[x]}
+                            </option>
                         )
                     })
-                }</Select>
-                <FormErrorMessage>{formik.errors.group}</FormErrorMessage>
-            </FormControl>
-        </Stack>
-    </Box>
+                }
+            </Select>
+            <FormErrorMessage>{formik.errors.slot}</FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={formik.touched.group && formik.errors.group}>
+            <Select
+                {...formik.getFieldProps('group')}
+                boxShadow="sm"
+                _hover={{ boxShadow: "md" }}
+            >{
+                [...Array(11).keys()].map((x) => {
+                    return (
+                        <option key={genGroup(x + 1)} value={x + 1}>{genGroup(x + 1)}</option>
+                    )
+                })
+            }</Select>
+            <FormErrorMessage>{formik.errors.group}</FormErrorMessage>
+        </FormControl>
+    </Stack>
     </>)
 };
 
 const DinerInfo = ({formik, hold}) => {
     return (
         <>
-        <h1>You're almost done!</h1>
+        <Heading as='h1' size='xl'>You're almost done!</Heading>
         <Stack gap={5} direction={{ base: "column", md: "row"}} mt="1rem" mb="1rem">
             <HStack>
                 <FontAwesomeIcon icon={faCalendar} style={{ color: "#495E57" }}/>
@@ -259,7 +253,7 @@ const DinerInfo = ({formik, hold}) => {
                 <Text>{genGroup(hold.group)}</Text>
             </HStack>
         </Stack>
-        <h2>Diner details</h2>
+        <Heading as='h2' size='lg'>Diner details</Heading>
         <Grid
           gap={3}
           templateColumns={{ base: "100%", md: "repeat(2, 49%)" }}

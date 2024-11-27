@@ -28,7 +28,6 @@ const HeroSection = () => {
                       colEnd={{ base: 13, md: 8 }}
                       rowStart={1}
                       rowEnd={2}
-                      //border="solid 1px cyan"
                     >
                       Little Lemon
                     </GridItem>
@@ -39,7 +38,6 @@ const HeroSection = () => {
                       colEnd={8}
                       rowStart={2}
                       rowEnd={3}
-                      //border="solid 1px blue"
                     >
                       Chicago
                     </GridItem>
@@ -50,7 +48,6 @@ const HeroSection = () => {
                       colEnd={{ base: 7, md: 6 }}
                       rowStart={3}
                       rowEnd={6}
-                      //border="solid 1px blue"
                     >
                         We are a family owned Mediterranean restaurant,
                         focused on traditional recipes served with a modern
@@ -61,7 +58,6 @@ const HeroSection = () => {
                       colEnd={{ base: 7, md: 6 }}
                       rowStart={6}
                       rowEnd={7}
-                      //border="solid 1px blue"
                     >
                       <Button asChild variant="brandPrimary" borderRadius="xl">
                         <Link to="/reservation">Reserve a Table</Link>
@@ -74,7 +70,6 @@ const HeroSection = () => {
               colEnd={{ base: 4, md: 3 }}
               rowStart={{base: 4, md: 3}}
               rowEnd={12}
-              //border="1px solid blue"
             >
                 <Image
                   src="img/restaurant-food-b.jpg"

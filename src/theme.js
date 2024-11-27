@@ -35,19 +35,16 @@ export const theme = extendTheme({
         fontFamily: 'Karla',
         fontWeight: 'medium',
         fontSize: '1.2rem',
-        //fontSize: '1rem',
       },
       'h1': {
         fontFamily: 'Markazi Text',
         fontWeight: 'medium',
-        //fontSize: '5.333rem',
         fontSize: '3.667rem',
         lineHeight: '100%',
       },
       'h2': {
         fontFamily: 'Markazi Text',
         fontWeight: 'normal',
-        //fontSize: '3.333rem',
         fontSize: '2.5rem',
         lineHeight: '100%'
       },
@@ -108,19 +105,3 @@ export const theme = extendTheme({
     Button: buttonTheme,
   },
 });
-/*
-const textStyles = defineTextStyles({
-    body: {
-      description: "The body text style - used in paragraphs",
-      value: {
-        fontFamily: "Tahoma",
-        fontWeight: "500",
-        fontSize: "16px",
-        lineHeight: "24",
-        letterSpacing: "0",
-        textDecoration: "None",
-        textTransform: "None",
-      },
-    },
-  });
-*/

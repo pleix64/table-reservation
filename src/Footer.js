@@ -1,4 +1,4 @@
-import { Flex, Box, Center, Stack, Grid, Image, Heading, Text, HStack } from "@chakra-ui/react";
+import { Flex, Stack, Grid, Image, Text, HStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareXTwitter, faInstagram, faFacebook } from "@fortawesome/free-brands-svg-icons";
@@ -57,7 +57,7 @@ const Footer = (props) => {
           <Text as="h3">Follow Us</Text>
           {socials.map((item) => {
             return (
-              <a href={item.url} target="_blank">
+              <a href={item.url} key={item.name} target="_blank" rel="noreferrer">
                 <HStack>
                   <FontAwesomeIcon icon={item.icon} size="2x" />
                   <Text>{item.name}</Text>
