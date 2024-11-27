@@ -1,6 +1,5 @@
-import { Button, Stack } from "@chakra-ui/react";
-import React from "react";
-import { Link, useNavigate, redirect } from "react-router-dom";
+import { Stack } from "@chakra-ui/react";
+import { Link, useLocation } from "react-router-dom";
 
 const sectionData = [
     {
@@ -41,11 +40,8 @@ const sectionData = [
     },
 ];
 
-const handleClick = (id, navigate) => () => {
+const handleClick = (id) => () => {
     const element = document.getElementById(id);
-    if (!element) {
-        navigate(-1);
-    }
     if (element) {
       element.scrollIntoView({
         behavior: "smooth",
@@ -55,7 +51,7 @@ const handleClick = (id, navigate) => () => {
   };
 
 const Nav = ({direction}) => {
-    const navigate = useNavigate();
+    const location = useLocation();
     return (
       <nav>
         <Stack
@@ -63,7 +59,10 @@ const Nav = ({direction}) => {
           gap={direction==="row"? "5" : "0"}
         >
             {sectionData.map((section) => {
-                return section.type ==="page" ? (
+                return location.pathname !== '/' && section.type === 'section' ? (
+                  null
+                ) : (
+                  section.type ==="page" ? (
                     <Link
                       className="button"
                       id={section.id}
@@ -77,11 +76,11 @@ const Nav = ({direction}) => {
                       className="button"
                       id={section.id}
                       key={section.id}
-                      onClick={handleClick(section.url, navigate)}
+                      onClick={handleClick(section.url)}
                     >
                         <p>{section.name}</p>
                     </Link>
-                )
+                ))
             })}
         </Stack>
       </nav>

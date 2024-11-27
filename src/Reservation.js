@@ -26,6 +26,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { addDays } from "date-fns";
 import { globals } from './globals'
 import { genTimeSlot, genGroup, toDateString } from "./utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 const timeLabels = [...Array(globals.NUM_SLOTS).keys()].map(genTimeSlot);
 
@@ -356,25 +358,31 @@ const DinerInfo = ({formik, hold}) => {
 
 const Confirmation = (props) => {
     return (
-    <Box className="message" mb="1rem">
+    <Box
+      className="message"
+      bg="secondary.250"
+      padding="1rem"
+      mb="1rem"
+      borderRadius="md"
+    >
         <Heading as="h1" mb="1rem">Confirmation of Booking</Heading>
         <Text as="p">
-            Dear <b>{props.firstName} {props.lastName}</b>,
+            Dear <strong>{props.firstName} {props.lastName}</strong>,
         </Text>
         <br />
         <Text as="p">
-        Thank you for choosing Little Lemon! We’re excited to host you. Below are the details of your reservation:
+        Thank you for choosing Little Lemon! Your reservation has been confirmed. We’re excited to host you. Below are the details of your reservation:
         </Text>
-        <UnorderedList>
-            <ListItem>Time: <b>{props.date.toString().slice(0,15)}, {timeLabels[props.slot]}</b></ListItem>
-            <ListItem>Guests: <b>{genGroup(props.group)}</b></ListItem>
-            <ListItem>Location: Little Lemon, Chicago</ListItem>
+        <UnorderedList listStyleType="none">
+            <ListItem><em>Time</em>: <strong>{props.date.toString().slice(0,15)}, {timeLabels[props.slot]}</strong></ListItem>
+            <ListItem><em>Guests</em>: <strong>{genGroup(props.group)}</strong></ListItem>
+            <ListItem><em>Location</em>: Little Lemon, Chicago</ListItem>
         </UnorderedList>
         <Text as="p">
-            We have sent this confirmation to <b>{props.email}</b> and will also send you a text reminder to <b>{props.phoneNumber}</b> as your reservation approaches.
+            We have sent this confirmation to <strong>{props.email}</strong> and will also send you a text reminder to <strong>{props.phoneNumber}</strong> as your reservation approaches.
         </Text>
         <Text as="p">
-            If you have any special requests or need to make changes to your booking, please contact us at <b>info@littlelemon.com</b> or call us at <b>(312) 555-6789</b>.
+            If you have any special requests or need to make changes to your booking, please contact us at <strong>info@littlelemon.com</strong> or call us at <strong>(312) 555-6789</strong>.
         </Text>
         <br />
         <Text as="p">
@@ -385,7 +393,7 @@ const Confirmation = (props) => {
             Warm regards,
         </Text>
         <Text as="p">
-            <b>The Little Lemon Team</b>
+            <strong>The Little Lemon Team</strong>
         </Text>
     </Box>)
 };
